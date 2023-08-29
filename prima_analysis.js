@@ -10,6 +10,7 @@ const res = db.reviews.aggregate([{
   $group:{
     _id: null,
     numberOfDocuments: {$sum: 1},
+    numberOfDocumentsAbove384: {$sum: {$cond: {if: {$gt:["$numberOfWords", 384]}, then: 1, else: 0}}},
     numberOfWords: { $sum: "$numberOfWords" },
     maxNumberOfWords: {$max: "$numberOfWords" },
     avgNumberOfWords: {$avg: "$numberOfWords"  }
